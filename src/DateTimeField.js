@@ -18,9 +18,10 @@ export default class DateTimeField extends Component {
     }
   }
 
-  resolvePropsInputFormat = () => {
-    if (this.props.inputFormat) { return this.props.inputFormat; }
-    switch (this.props.mode) {
+  resolvePropsInputFormat = (nextProps) => {
+    let props = nextProps || this.props;
+    if (props.inputFormat) { return this.props.inputFormat; }
+    switch (props.mode) {
       case Constants.MODE_TIME:
         return "h:mm A";
       case Constants.MODE_DATE:
@@ -68,7 +69,7 @@ export default class DateTimeField extends Component {
       return this.setState({
         viewDate: moment(nextProps.dateTime, nextProps.format, true).startOf("month"),
         selectedDate: moment(nextProps.dateTime, nextProps.format, true),
-        inputValue: moment(nextProps.dateTime, nextProps.format, true).format(nextProps.inputFormat)
+        inputValue: moment(nextProps.dateTime, nextProps.format, true).format(this.resolvePropsInputFormat(nextProps))
       });
     }
     if (nextProps.inputFormat !== this.props.inputFormat) {
