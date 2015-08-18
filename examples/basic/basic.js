@@ -3,6 +3,9 @@ import DateTimeField from "react-bootstrap-datetimepicker";
 import moment from "moment";
 
 class Basic extends Component {
+  state = {
+    locale: "en"
+  }
 
 	render() {
     return (
@@ -78,8 +81,38 @@ class Basic extends Component {
                   <pre> {'<DateTimeField mode="date" />'} </pre>
               </div>
             </div>
+            <div className="row">
+              <div className="col-xs-12">
+                  i18n
+                  <DateTimeField
+                      mode="date"
+                      dateTime={this.state.value}
+                      locale={this.state.locale}
+                      onChange={this._handleDateTimeChange}
+                      />
+                  <pre> {'<DateTimeField mode="date" locale="' + this.state.locale + '"/>'} </pre>
+              </div>
+              <div>
+                 <div className="col-xs-2">Language:</div>
+                 <div className="col-xs-10">
+                     <select id="locale" value={this.state.locale} onChange={this._handleLocaleChange} className="form-control">
+                         <option value="en">English(en)</option>
+                         <option value="fr">French(fr)</option>
+                         <option value="ja">Japan(ja)</option>
+                     </select>
+                 </div>
+              </div>
+            </div>
           </div>
       );
+   }
+
+   _handleLocaleChange = (event) => {
+     this.setState({locale: event.target.value});
+   }
+
+   _handleDateTimeChange = (dateTime) => {
+     this.setState({value: dateTime});
    }
 }
 
