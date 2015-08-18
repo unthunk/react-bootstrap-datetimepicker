@@ -68,6 +68,16 @@ export default class DateTimePickerDays extends Component {
     return html;
   }
 
+  renderWeekdays() {
+    let currentLocaleData = moment.localeData(this.props.viewDate.locale());
+    let weekdays = [0,1,2,3,4,5,6].map(i =>
+      currentLocaleData.weekdaysMin(this.props.viewDate.weekday(i))
+    );
+    return weekdays.map(weekday => (
+        <th className="dow">{weekday}</th>
+    ));
+  }
+
   render() {
     return (
     <div className="datepicker-days" style={{display: "block"}}>
@@ -82,19 +92,7 @@ export default class DateTimePickerDays extends Component {
             </tr>
 
             <tr>
-              <th className="dow">Su</th>
-
-              <th className="dow">Mo</th>
-
-              <th className="dow">Tu</th>
-
-              <th className="dow">We</th>
-
-              <th className="dow">Th</th>
-
-              <th className="dow">Fr</th>
-
-              <th className="dow">Sa</th>
+              {this.renderWeekdays()}
             </tr>
           </thead>
 
