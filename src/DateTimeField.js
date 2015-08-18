@@ -7,8 +7,9 @@ import Constants from "./Constants.js";
 export default class DateTimeField extends Component {
   static defaultProps = {
     dateTime: moment().format("x"),
-    calendarFormat: "MMMMM YYYY",
+    calendarFormat: "MMMM YYYY",
     format: "x",
+    locale: "en",
     showToday: true,
     viewMode: "days",
     daysOfWeekDisabled: [],
@@ -16,6 +17,10 @@ export default class DateTimeField extends Component {
     onChange: (x) => {
       console.log(x);
     }
+  }
+
+  newLocalizedMoment = (dateTime, format, strictParse) => {
+    return moment(dateTime, format, this.props.locale, strictParse);
   }
 
   resolvePropsInputFormat = (nextProps) => {
@@ -36,6 +41,7 @@ export default class DateTimeField extends Component {
     onChange: PropTypes.func,
     format: PropTypes.string,
     calendarFormat: PropTypes.string,
+    locale: PropTypes.string,
     inputProps: PropTypes.object,
     inputFormat: PropTypes.string,
     defaultText: PropTypes.string,
@@ -59,17 +65,17 @@ export default class DateTimeField extends Component {
         left: -9999,
         zIndex: "9999 !important"
       },
-      viewDate: moment(this.props.dateTime, this.props.format, true).startOf("month"),
-      selectedDate: moment(this.props.dateTime, this.props.format, true),
-      inputValue: typeof this.props.defaultText !== "undefined" ? this.props.defaultText : moment(this.props.dateTime, this.props.format, true).format(this.resolvePropsInputFormat())
+      viewDate: this.newLocalizedMoment(this.props.dateTime, this.props.format, true).startOf("month"),
+      selectedDate: this.newLocalizedMoment(this.props.dateTime, this.props.format, true),
+      inputValue: typeof this.props.defaultText !== "undefined" ? this.props.defaultText : this.newLocalizedMoment(this.props.dateTime, this.props.format, true).format(this.resolvePropsInputFormat())
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (moment(nextProps.dateTime, nextProps.format, true).isValid()) {
+    if (moment(nextProps.dateTime, nextProps.format, nextProps.locale, true).isValid()) {
       return this.setState({
-        viewDate: moment(nextProps.dateTime, nextProps.format, true).startOf("month"),
-        selectedDate: moment(nextProps.dateTime, nextProps.format, true),
-        inputValue: moment(nextProps.dateTime, nextProps.format, true).format(this.resolvePropsInputFormat(nextProps))
+        viewDate: moment(nextProps.dateTime, nextProps.format, nextProps.locale, true).startOf("month"),
+        selectedDate: moment(nextProps.dateTime, nextProps.format, nextProps.locale, true),
+        inputValue: moment(nextProps.dateTime, nextProps.format, nextProps.locale, true).format(this.resolvePropsInputFormat(nextProps))
       });
     }
     if (nextProps.inputFormat !== this.props.inputFormat) {
@@ -83,23 +89,23 @@ export default class DateTimeField extends Component {
 
   onChange = (event) => {
     const value = event.target == null ? event : event.target.value;
-    if (moment(value, this.state.inputFormat, true).isValid()) {
+    if (this.newLocalizedMoment(value, this.state.inputFormat, true).isValid()) {
       this.setState({
-        selectedDate: moment(value, this.state.inputFormat, true),
-        viewDate: moment(value, this.state.inputFormat, true).startOf("month")
+        selectedDate: this.newLocalizedMoment(value, this.state.inputFormat, true),
+        viewDate: this.newLocalizedMoment(value, this.state.inputFormat, true).startOf("month")
       });
     }
 
     return this.setState({
       inputValue: value
     }, function() {
-      return this.props.onChange(moment(this.state.inputValue, this.state.inputFormat, true).format(this.props.format));
+      return this.props.onChange(this.newLocalizedMoment(this.state.inputValue, this.state.inputFormat, true).format(this.props.format));
     });
 
   }
 
   getValue = () => {
-    return moment(this.state.inputValue, this.props.inputFormat, true).format(this.props.format);
+    return this.newLocalizedMoment(this.state.inputValue, this.props.inputFormat, true).format(this.props.format);
   }
 
   setSelectedDate = (e) => {
