@@ -13,7 +13,8 @@ export default class DateTimePickerDays extends Component {
     setSelectedDate: PropTypes.func.isRequired,
     showMonths: PropTypes.func.isRequired,
     minDate: PropTypes.object,
-    maxDate: PropTypes.object
+    maxDate: PropTypes.object,
+    calendarFormat: PropTypes.string
   }
 
   static defaultProps = {
@@ -86,7 +87,7 @@ export default class DateTimePickerDays extends Component {
             <tr>
               <th className="prev" onClick={this.props.subtractMonth}>‹</th>
 
-              <th className="switch" colSpan="5" onClick={this.props.showMonths}>{moment.months()[this.props.viewDate.month()]} {this.props.viewDate.year()}</th>
+              <th className="switch" colSpan="5" onClick={this.props.showMonths}>{this.props.viewDate.format(this.props.calendarFormat)}</th>
 
               <th className="next" onClick={this.props.addMonth}>›</th>
             </tr>

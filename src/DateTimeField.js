@@ -7,6 +7,7 @@ import Constants from "./Constants.js";
 export default class DateTimeField extends Component {
   static defaultProps = {
     dateTime: moment().format("x"),
+    calendarFormat: "MMMMM YYYY",
     format: "x",
     showToday: true,
     viewMode: "days",
@@ -33,6 +34,7 @@ export default class DateTimeField extends Component {
     dateTime: PropTypes.string,
     onChange: PropTypes.func,
     format: PropTypes.string,
+    calendarFormat: PropTypes.string,
     inputProps: PropTypes.object,
     inputFormat: PropTypes.string,
     defaultText: PropTypes.string,
@@ -330,6 +332,7 @@ export default class DateTimeField extends Component {
                   addMinute={this.addMinute}
                   addMonth={this.addMonth}
                   addYear={this.addYear}
+                  calendarFormat={this.props.calendarFormat}
                   daysOfWeekDisabled={this.props.daysOfWeekDisabled}
                   maxDate={this.props.maxDate}
                   minDate={this.props.minDate}

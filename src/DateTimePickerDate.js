@@ -23,7 +23,8 @@ export default class DateTimePickerDate extends Component {
     addDecade: PropTypes.func.isRequired,
     subtractDecade: PropTypes.func.isRequired,
     minDate: PropTypes.object,
-    maxDate: PropTypes.object
+    maxDate: PropTypes.object,
+    calendarFormat: PropTypes.string
   }
 
   constructor(props) {
@@ -83,6 +84,7 @@ export default class DateTimePickerDate extends Component {
       return (
       <DateTimePickerDays
             addMonth={this.props.addMonth}
+            calendarFormat={this.props.calendarFormat}
             daysOfWeekDisabled={this.props.daysOfWeekDisabled}
             maxDate={this.props.maxDate}
             minDate={this.props.minDate}
