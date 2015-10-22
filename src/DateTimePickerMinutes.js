@@ -13,8 +13,18 @@ export default class DateTimePickerMinutes extends Component {
     return this.props.mode === Constants.MODE_TIME ?
         (
             <ul className="list-unstyled">
-              <li>
-                <span className="btn picker-switch" style={{width: "100%"}} onClick={this.props.onSwitch}><Glyphicon glyph="time" /></span>
+              <li className="picker-switch accordion-toggle">
+                <table className="table-condensed">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <a onClick={this.props.onSwitch} data-action="togglePicker" title="Select Time">
+                          <Glyphicon glyph="time" />
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </li>
             </ul>
         ) :
@@ -62,4 +72,3 @@ export default class DateTimePickerMinutes extends Component {
     );
   }
 }
-
