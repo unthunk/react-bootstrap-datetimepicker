@@ -57,9 +57,7 @@ export default class DateTimeField extends Component {
       buttonIcon: this.props.mode === Constants.MODE_TIME ? "time" : "calendar",
       widgetStyle: {
         display: "block",
-        position: "absolute",
-        left: -9999,
-        zIndex: "9999 !important"
+        left: -9999
       },
       viewDate: moment(this.props.dateTime, this.props.format, true).startOf("month"),
       selectedDate: moment(this.props.dateTime, this.props.format, true),
@@ -287,10 +285,9 @@ export default class DateTimeField extends Component {
       }
       styles = {
         display: "block",
-        position: "absolute",
         top: offset.top,
         left: "auto",
-        right: 40
+        right: 0
       };
       return this.setState({
         widgetStyle: styles,
@@ -338,7 +335,7 @@ export default class DateTimeField extends Component {
 
   render() {
     return (
-          <div>
+          <div style={{position: 'relative'}}>
             {this.renderOverlay()}
             <DateTimePicker
                   addDecade={this.addDecade}
@@ -382,4 +379,3 @@ export default class DateTimeField extends Component {
     );
   }
 }
-
