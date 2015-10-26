@@ -76,7 +76,7 @@ export default class DateTimePickerDays extends Component {
             <tr>
               <th className="prev" onClick={this.props.subtractMonth}>‹</th>
 
-              <th className="switch" colSpan="5" onClick={this.props.showMonths}>{moment.months()[this.props.viewDate.month()]} {this.props.viewDate.year()}</th>
+              <th className="picker-switch" data-action="pickerSwitch" colSpan="5" onClick={this.props.showMonths}>{moment.months()[this.props.viewDate.month()]} {this.props.viewDate.year()}</th>
 
               <th className="next" onClick={this.props.addMonth}>›</th>
             </tr>
@@ -106,4 +106,3 @@ export default class DateTimePickerDays extends Component {
     );
   }
 }
-

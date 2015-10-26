@@ -92,8 +92,18 @@ export default class DateTimePicker extends Component {
   renderSwitchButton = () => {
       return this.props.mode === Constants.MODE_DATETIME ?
           (
-              <li>
-                <span className="btn picker-switch" style={{width: "100%"}} onClick={this.props.togglePicker}><Glyphicon glyph={this.props.showTimePicker ? "calendar" : "time"} /></span>
+              <li className="picker-switch accordion-toggle">
+                <table className="table-condensed">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <a onClick={this.props.togglePicker} data-action="togglePicker" title="Select Time">
+                          <Glyphicon glyph={this.props.showTimePicker ? "calendar" : "time"} />
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </li>
           ) :
           null;
@@ -118,4 +128,3 @@ export default class DateTimePicker extends Component {
     );
   }
 }
-

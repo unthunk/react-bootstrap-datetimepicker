@@ -82,6 +82,7 @@
   "dependencies": {
     "babel-runtime": "^5.6.18",
     "classnames": "^2.1.2",
+    "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "moment": "^2.8.2",
     "react-bootstrap": "^0.16.1"
   }
