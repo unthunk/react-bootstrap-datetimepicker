@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from "react";
-import { Glyphicon } from "react-bootstrap";
 import classnames from "classnames";
 import DateTimePickerDate from "./DateTimePickerDate.js";
 import DateTimePickerTime from "./DateTimePickerTime.js";
+import DateTimePickerIcons from "./DateTimePickerIcons.js";
 import Constants from "./Constants.js";
 
 export default class DateTimePicker extends Component {
@@ -50,6 +50,7 @@ export default class DateTimePicker extends Component {
               addMonth={this.props.addMonth}
               addYear={this.props.addYear}
               daysOfWeekDisabled={this.props.daysOfWeekDisabled}
+              icons={this.props.icons}
               maxDate={this.props.maxDate}
               minDate={this.props.minDate}
               selectedDate={this.props.selectedDate}
@@ -75,6 +76,7 @@ export default class DateTimePicker extends Component {
         <DateTimePickerTime
               addHour={this.props.addHour}
               addMinute={this.props.addMinute}
+              icons={this.props.icons}
               mode={this.props.mode}
               selectedDate={this.props.selectedDate}
               setSelectedHour={this.props.setSelectedHour}
@@ -98,7 +100,7 @@ export default class DateTimePicker extends Component {
                     <tr>
                       <td>
                         <a onClick={this.props.togglePicker} data-action="togglePicker" title="Select Time">
-                          <Glyphicon glyph={this.props.showTimePicker ? "calendar" : "time"} />
+                          <DateTimePickerIcons glyph={this.props.showTimePicker ? "date" : "time"} icons={this.props.icons} />
                         </a>
                       </td>
                     </tr>

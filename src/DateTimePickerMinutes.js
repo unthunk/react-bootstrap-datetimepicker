@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import { Glyphicon } from "react-bootstrap";
+import DateTimePickerIcons from "./DateTimePickerIcons.js";
 import Constants from "./Constants.js";
 
 export default class DateTimePickerMinutes extends Component {
@@ -19,7 +19,7 @@ export default class DateTimePickerMinutes extends Component {
                     <tr>
                       <td>
                         <a className="togglePicker"  onClick={this.props.onSwitch} data-action="togglePicker" title="Select Time">
-                          <Glyphicon glyph="time" />
+                          <DateTimePickerIcons glyph="time" icons={this.props.icons} />
                         </a>
                       </td>
                     </tr>
