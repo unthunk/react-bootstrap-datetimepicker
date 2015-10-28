@@ -18,7 +18,7 @@ export default class DateTimePickerMinutes extends Component {
                   <tbody>
                     <tr>
                       <td>
-                        <a onClick={this.props.onSwitch} data-action="togglePicker" title="Select Time">
+                        <a className="togglePicker"  onClick={this.props.onSwitch} data-action="togglePicker" title="Select Time">
                           <Glyphicon glyph="time" />
                         </a>
                       </td>
