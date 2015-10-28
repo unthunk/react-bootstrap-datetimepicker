@@ -39,7 +39,7 @@ describe("DateTimePickerMonths", function() {
       });
 
      it("calls showYears when clicking the year", function() {
-       const year = TestUtils.findRenderedDOMComponentWithClass(months, "switch");
+       const year = TestUtils.findRenderedDOMComponentWithClass(months, "picker-switch");
        TestUtils.Simulate.click(year);
        expect(showYearsMock.mock.calls.length).toBe(1);
       });

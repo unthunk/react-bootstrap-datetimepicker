@@ -29,7 +29,7 @@ describe("DateTimePickerHours", function() {
      });
 
     it("calls onSwitch when clicking the switch", function() {
-      const switchIcon = TestUtils.findRenderedDOMComponentWithClass(hours, "picker-switch");
+      const switchIcon = TestUtils.findRenderedDOMComponentWithClass(hours, "togglePicker");
       TestUtils.Simulate.click(switchIcon);
       expect(onSwitchMock.mock.calls.length).toBe(1);
      });
