@@ -36,14 +36,14 @@ export default class DateTimePickerMonths extends Component {
           <table className="table-condensed">
             <thead>
               <tr>
-                <th className="prev" data-action="previous" >
-                  <DateTimePickerIcons onClick={this.props.subtractYear} icons={this.props.icons} glyph="previous" />
+                <th className="prev" data-action="previous" onClick={this.props.subtractYear} >
+                  <DateTimePickerIcons icons={this.props.icons} glyph="previous" />
                 </th>
 
                 <th className="picker-switch" data-action="pickerSwitch" colSpan="5" onClick={this.props.showYears}>{this.props.viewDate.year()}</th>
 
-                <th className="next" data-action="next" >
-                  <DateTimePickerIcons onClick={this.props.addYear} icons={this.props.icons} glyph="next" />
+                <th className="next" data-action="next" onClick={this.props.addYear} >
+                  <DateTimePickerIcons icons={this.props.icons} glyph="next" />
                 </th>
               </tr>
             </thead>
