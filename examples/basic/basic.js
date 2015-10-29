@@ -76,15 +76,25 @@ class Basic extends Component {
                 </pre>
               </div>
             </div>
-              <div className="row">
-                <div className="col-xs-12">
-                  Example with default Text
-                  <DateTimeField
-                    defaultText="Please select a date"
-                  />
-                  <pre> {'<DateTimeField defaultText="Please select a date" />'} </pre>
-                </div>
+            <div className="row">
+              <div className="col-xs-12">
+                Example with default Text
+                <DateTimeField
+                  defaultText="Please select a date"
+                />
+                <pre> {'<DateTimeField defaultText="Please select a date" />'} </pre>
               </div>
+            </div>
+            <div className="row">
+              <div className="col-xs-12">
+                Example with Icons
+                <DateTimeField
+                  defaultText="Please select a date"
+                  icons={{time: 'fa fa-clock-o', date: 'fa fa-calendar', up: 'fa fa-chevron-up', down: 'fa fa-chevron-down', previous: 'fa fa-chevron-left', next: 'fa fa-chevron-right', today: 'fa fa-crosshairs', clear: 'fa fa-trash', close: 'fa fa-times'}}
+                />
+              <pre> {'<DateTimeField defaultText="Please select a date" icons={{time: "fa fa-clock-o", date: "fa fa-calendar", up: "fa fa-chevron-up", down: "fa fa-chevron-down", previous: "fa fa-chevron-left", next: "fa fa-chevron-right", today: "fa fa-crosshairs", clear: "fa fa-trash", close: "fa fa-times"}}/>'} </pre>
+              </div>
+            </div>
             <div className="row">
 							<div className="col-xs-12">
 								Default Basic Example
