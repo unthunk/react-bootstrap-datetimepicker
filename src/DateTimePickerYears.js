@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import classnames from "classnames";
+import DateTimePickerIcons from "./DateTimePickerIcons.js";
 
 export default class DateTimePickerYears extends Component {
   static propTypes = {
@@ -37,11 +38,15 @@ export default class DateTimePickerYears extends Component {
         <table className="table-condensed">
           <thead>
             <tr>
-              <th className="prev" onClick={this.props.subtractDecade}>‹</th>
+              <th className="prev" data-action="previous" >
+                <DateTimePickerIcons onClick={this.props.subtractDecade} icons={this.props.icons} glyph="previous" />
+              </th>
 
               <th className="picker-switch" data-action="pickerSwitch" colSpan="5">{year} - {year + 9}</th>
 
-              <th className="next" onClick={this.props.addDecade}>›</th>
+              <th className="next" data-action="next" >
+                <DateTimePickerIcons onClick={this.props.addDecade} icons={this.props.icons} glyph="next" />
+              </th>
             </tr>
           </thead>
 
