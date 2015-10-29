@@ -84,6 +84,7 @@ export default class DateTimePickerDate extends Component {
       <DateTimePickerDays
             addMonth={this.props.addMonth}
             daysOfWeekDisabled={this.props.daysOfWeekDisabled}
+            icons={this.props.icons}
             maxDate={this.props.maxDate}
             minDate={this.props.minDate}
             selectedDate={this.props.selectedDate}
@@ -104,6 +105,7 @@ export default class DateTimePickerDate extends Component {
       return (
       <DateTimePickerMonths
             addYear={this.props.addYear}
+            icons={this.props.icons}
             selectedDate={this.props.selectedDate}
             setViewMonth={this.setViewMonth}
             showYears={this.showYears}
@@ -121,6 +123,7 @@ export default class DateTimePickerDate extends Component {
       return (
       <DateTimePickerYears
             addDecade={this.props.addDecade}
+            icons={this.props.icons}
             selectedDate={this.props.selectedDate}
             setViewYear={this.setViewYear}
             subtractDecade={this.props.subtractDecade}
@@ -144,4 +147,3 @@ export default class DateTimePickerDate extends Component {
     );
   }
 }
-

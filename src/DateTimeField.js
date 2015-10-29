@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import moment from "moment";
-import { Glyphicon } from "react-bootstrap";
 import DateTimePicker from "./DateTimePicker.js";
+import DateTimePickerIcons from "./DateTimePickerIcons.js";
 import Constants from "./Constants.js";
 
 export default class DateTimeField extends Component {
@@ -47,14 +47,15 @@ export default class DateTimeField extends Component {
     showToday: PropTypes.bool,
     viewMode: PropTypes.string,
     size: PropTypes.oneOf([Constants.SIZE_SMALL, Constants.SIZE_MEDIUM, Constants.SIZE_LARGE]),
-    daysOfWeekDisabled: PropTypes.arrayOf(PropTypes.integer)
+    daysOfWeekDisabled: PropTypes.arrayOf(PropTypes.integer),
+    icons: PropTypes.object
   }
 
   state = {
       showDatePicker: this.props.mode !== Constants.MODE_TIME,
       showTimePicker: this.props.mode === Constants.MODE_TIME,
       inputFormat: this.resolvePropsInputFormat(),
-      buttonIcon: this.props.mode === Constants.MODE_TIME ? "time" : "calendar",
+      buttonIcon: this.props.mode === Constants.MODE_TIME ? "time" : "date",
       widgetStyle: {
         display: "block",
         left: -9999
@@ -344,6 +345,7 @@ export default class DateTimeField extends Component {
                   addMonth={this.addMonth}
                   addYear={this.addYear}
                   daysOfWeekDisabled={this.props.daysOfWeekDisabled}
+                  icons={this.props.icons}
                   maxDate={this.props.maxDate}
                   minDate={this.props.minDate}
                   mode={this.props.mode}
@@ -372,7 +374,7 @@ export default class DateTimeField extends Component {
             <div className={"input-group date " + this.size()} ref="datetimepicker">
               <input className="form-control" onChange={this.onChange} type="text" value={this.state.inputValue} {...this.props.inputProps}/>
               <span className="input-group-addon" onBlur={this.onBlur} onClick={this.onClick} ref="dtpbutton">
-                <Glyphicon glyph={this.state.buttonIcon} />
+                <DateTimePickerIcons icons={this.props.icons} glyph={this.state.buttonIcon} />
               </span>
             </div>
           </div>
