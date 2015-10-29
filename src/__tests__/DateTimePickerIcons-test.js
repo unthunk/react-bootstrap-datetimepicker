@@ -30,6 +30,18 @@ describe("DateTimePickerIcons",function() {
       expect(iconElement.length).toBe(1);
       expect(iconElement[0].props.className).toBe("fa fa-clock-o");
     });
+
+    it("renders an icon with a default class when custom icons are passes in without an override for that icon", function() {
+      icon = TestUtils.renderIntoDocument(
+        <DateTimePickerIcons
+          glyph="time"
+          icons={{date: 'fa fa-calendar'}}
+         />
+      );
+      const iconElement = TestUtils.scryRenderedDOMComponentsWithClass(icon, "glyphicon-time");
+      expect(iconElement.length).toBe(1);
+      expect(iconElement[0].props.className).toBe("glyphicon glyphicon-time");
+    });
   });
 
 });
