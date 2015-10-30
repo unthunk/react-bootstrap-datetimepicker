@@ -70,7 +70,6 @@ export default class DateTimePickerDays extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
     <div className="datepicker-days" style={{display: "block"}}>
         <table className="table-condensed">
