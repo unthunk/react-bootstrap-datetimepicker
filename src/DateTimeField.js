@@ -15,6 +15,10 @@ export default class DateTimeField extends Component {
     mode: Constants.MODE_DATETIME,
     onChange: (x) => {
       console.log(x);
+    },
+    widgetPositioning: {
+      vertical: 'auto',
+      horizontal: 'auto'
     }
   }
 
@@ -43,14 +47,13 @@ export default class DateTimeField extends Component {
     mode: PropTypes.oneOf([Constants.MODE_DATE, Constants.MODE_DATETIME, Constants.MODE_TIME]),
     minDate: PropTypes.object,
     maxDate: PropTypes.object,
-    direction: PropTypes.string,
     showToday: PropTypes.bool,
     viewMode: PropTypes.string,
     size: PropTypes.oneOf([Constants.SIZE_SMALL, Constants.SIZE_MEDIUM, Constants.SIZE_LARGE]),
     daysOfWeekDisabled: PropTypes.arrayOf(PropTypes.integer),
-    icons: PropTypes.object
+    icons: PropTypes.object,
+    widgetPositioning: PropTypes.object
   }
-
   state = {
       showDatePicker: this.props.mode !== Constants.MODE_TIME,
       showTimePicker: this.props.mode === Constants.MODE_TIME,
@@ -58,7 +61,12 @@ export default class DateTimeField extends Component {
       buttonIcon: this.props.mode === Constants.MODE_TIME ? "time" : "date",
       widgetStyle: {
         display: "block",
-        left: -9999
+        left: -9999,
+        position: 'absolute'
+      },
+      widgetClasses: {
+        "bootstrap-datetimepicker-widget": true,
+        "dropdown-menu": true
       },
       viewDate: moment(this.props.dateTime, this.props.format, true).startOf("month"),
       selectedDate: moment(this.props.dateTime, this.props.format, true),
@@ -254,14 +262,16 @@ export default class DateTimeField extends Component {
   }
 
   onClick = () => {
-    let classes, gBCR, offset, placePosition, scrollTop, styles;
+    let classes, gBCR, dtpWrapper, offset, parentWidth, widget, widgetWidth, scrollTop, patternVertical, patternHorizontal, vertical, horizontal, styles;
     if (this.state.showPicker) {
       return this.closePicker();
     } else {
       this.setState({
         showPicker: true
       });
-      gBCR = this.refs.dtpbutton.getDOMNode().getBoundingClientRect();
+      gBCR = React.findDOMNode(this.refs.dtpbutton).getBoundingClientRect();
+      dtpWrapper = React.findDOMNode(this.refs.dtpWrapper);
+      parentWidth = dtpWrapper.getBoundingClientRect().width;
       classes = {
         "bootstrap-datetimepicker-widget": true,
         "dropdown-menu": true
@@ -270,25 +280,67 @@ export default class DateTimeField extends Component {
         top: gBCR.top + window.pageYOffset - document.documentElement.clientTop,
         left: gBCR.left + window.pageXOffset - document.documentElement.clientLeft
       };
-      offset.top = offset.top + this.refs.datetimepicker.getDOMNode().offsetHeight;
+      widget = React.findDOMNode(this.refs.widget);
+      widgetWidth = widget.offsetWidth;
+      offset.top = offset.top + dtpWrapper.offsetHeight;
       scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-      placePosition = this.props.direction === "up" ? "top" : this.props.direction === "bottom" ? "bottom" : this.props.direction === "auto" ? offset.top + this.refs.widget.getDOMNode().offsetHeight > window.offsetHeight + scrollTop && this.refs.widget.offsetHeight + this.refs.datetimepicker.getDOMNode().offsetHeight > offset.top ? "top" : "bottom" : void 0;
-      if (placePosition === "top") {
-        offset.top = -this.refs.widget.getDOMNode().offsetHeight - this.getDOMNode().clientHeight - 2;
+
+      // get position settings
+      patternVertical = /^(top|bottom)$/i;
+      patternHorizontal = /^(left|right)$/i;
+      vertical = this.props.widgetPositioning && this.props.widgetPositioning.vertical && patternVertical.test(this.props.widgetPositioning.vertical) ? this.props.widgetPositioning.vertical : 'auto';
+      horizontal = this.props.widgetPositioning && this.props.widgetPositioning.horizontal && patternHorizontal.test(this.props.widgetPositioning.horizontal) ? this.props.widgetPositioning.horizontal : 'auto';
+      console.log('this.props.widgetPositioning',this.props.widgetPositioning);
+      console.log('horizontal: '+horizontal);
+
+      // vertical placement
+      if (vertical === 'auto') {
+        if(offset.top + widget.offsetHeight > window.offsetHeight + scrollTop && widget.offsetHeight + widget.offsetHeight > offset.top){
+          vertical = "top";
+        }
+        else {
+          vertical = "bottom";
+        }
+      }
+      else {
+        vertical = this.props.widgetPositioning.vertical;
+      }
+
+      // horizontal placement
+      if (horizontal === 'auto') {
+          if(parentWidth < offset.left + widgetWidth / 2 && offset.left + widgetWidth > window.document.documentElement.clientWidth){
+            horizontal = 'right';
+            console.log('RIGHT');
+          }
+          else {
+            horizontal = 'left';
+            console.log('LEFT');
+          }
+      }
+      else {
+        horizontal = this.props.widgetPositioning.horizontal;
+      }
+
+      // determine widget placement styles & classes
+      if (vertical === 'top') {
+        offset.top = -widget.offsetHeight - (widget.offsetHeight - widget.clientHeight);
         classes.top = true;
         classes.bottom = false;
-        classes["pull-right"] = true;
       } else {
-        offset.top = 40;
+        offset.top = gBCR.height - (widget.offsetHeight - widget.clientHeight);
         classes.top = false;
         classes.bottom = true;
-        classes["pull-right"] = true;
+      }
+      if (horizontal === 'right') {
+          classes["pull-right"] = true;
+      } else {
+          classes["pull-right"] = false;
       }
       styles = {
         display: "block",
         top: offset.top,
-        left: "auto",
-        right: 0
+        left: horizontal === 'left' ? 0 : 'auto',
+        right: horizontal === 'left' ? 'auto' : 0
       };
       return this.setState({
         widgetStyle: styles,
@@ -300,7 +352,7 @@ export default class DateTimeField extends Component {
   closePicker = () => {
     let style = this.state.widgetStyle;
     style.left = -9999;
-    style.display = "none";
+    style.display = "block";
     return this.setState({
       showPicker: false,
       widgetStyle: style
@@ -336,48 +388,47 @@ export default class DateTimeField extends Component {
 
   render() {
     return (
-          <div style={{position: 'relative'}}>
-            {this.renderOverlay()}
-            <DateTimePicker
-                  addDecade={this.addDecade}
-                  addHour={this.addHour}
-                  addMinute={this.addMinute}
-                  addMonth={this.addMonth}
-                  addYear={this.addYear}
-                  daysOfWeekDisabled={this.props.daysOfWeekDisabled}
-                  icons={this.props.icons}
-                  maxDate={this.props.maxDate}
-                  minDate={this.props.minDate}
-                  mode={this.props.mode}
-                  ref="widget"
-                  selectedDate={this.state.selectedDate}
-                  setSelectedDate={this.setSelectedDate}
-                  setSelectedHour={this.setSelectedHour}
-                  setSelectedMinute={this.setSelectedMinute}
-                  setViewMonth={this.setViewMonth}
-                  setViewYear={this.setViewYear}
-                  showDatePicker={this.state.showDatePicker}
-                  showTimePicker={this.state.showTimePicker}
-                  showToday={this.props.showToday}
-                  subtractDecade={this.subtractDecade}
-                  subtractHour={this.subtractHour}
-                  subtractMinute={this.subtractMinute}
-                  subtractMonth={this.subtractMonth}
-                  subtractYear={this.subtractYear}
-                  togglePeriod={this.togglePeriod}
-                  togglePicker={this.togglePicker}
-                  viewDate={this.state.viewDate}
-                  viewMode={this.props.viewMode}
-                  widgetClasses={this.state.widgetClasses}
-                  widgetStyle={this.state.widgetStyle}
-            />
-            <div className={"input-group date " + this.size()} ref="datetimepicker">
-              <input className="form-control" onChange={this.onChange} type="text" value={this.state.inputValue} {...this.props.inputProps}/>
-              <span className="input-group-addon" onBlur={this.onBlur} onClick={this.onClick} ref="dtpbutton">
-                <DateTimePickerIcons icons={this.props.icons} glyph={this.state.buttonIcon} />
-              </span>
-            </div>
-          </div>
+      <div className={"input-group date " + this.size()} style={{position:'relative'}} ref="dtpWrapper">
+        <input className="form-control" onChange={this.onChange} type="text" value={this.state.inputValue} {...this.props.inputProps}/>
+        {this.renderOverlay()}
+        <DateTimePicker
+              addDecade={this.addDecade}
+              addHour={this.addHour}
+              addMinute={this.addMinute}
+              addMonth={this.addMonth}
+              addYear={this.addYear}
+              daysOfWeekDisabled={this.props.daysOfWeekDisabled}
+              icons={this.props.icons}
+              maxDate={this.props.maxDate}
+              minDate={this.props.minDate}
+              mode={this.props.mode}
+              ref="widget"
+              selectedDate={this.state.selectedDate}
+              setSelectedDate={this.setSelectedDate}
+              setSelectedHour={this.setSelectedHour}
+              setSelectedMinute={this.setSelectedMinute}
+              setViewMonth={this.setViewMonth}
+              setViewYear={this.setViewYear}
+              showDatePicker={this.state.showDatePicker}
+              showTimePicker={this.state.showTimePicker}
+              showToday={this.props.showToday}
+              subtractDecade={this.subtractDecade}
+              subtractHour={this.subtractHour}
+              subtractMinute={this.subtractMinute}
+              subtractMonth={this.subtractMonth}
+              subtractYear={this.subtractYear}
+              togglePeriod={this.togglePeriod}
+              togglePicker={this.togglePicker}
+              viewDate={this.state.viewDate}
+              viewMode={this.props.viewMode}
+              widgetClasses={this.state.widgetClasses}
+              widgetStyle={this.state.widgetStyle}
+              widgetPositioning={this.props.widgetPositioning}
+        />
+        <span className="input-group-addon" onBlur={this.onBlur} onClick={this.onClick} ref="dtpbutton">
+          <DateTimePickerIcons icons={this.props.icons} glyph={this.state.buttonIcon} />
+        </span>
+      </div>
     );
   }
 }

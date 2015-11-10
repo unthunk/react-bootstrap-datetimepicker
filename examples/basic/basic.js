@@ -160,6 +160,15 @@ class Basic extends Component {
                   <pre> {'<DateTimeField mode="date" />'} </pre>
               </div>
             </div>
+            <div className="row">
+							<div className="col-xs-12">
+								Specifiy widget placement
+								<DateTimeField
+									widgetPositioning={{vertical:'top',horizontal:'right'}}
+								/>
+              <pre> {'<DateTimeField widgetPositioning={{vertical:\'top\',horizontal:\'right\'}} />'} </pre>
+							</div>
+						</div>
           </div>
       );
    }
