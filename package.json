@@ -1,11 +1,11 @@
 {
-  "name": "react-bootstrap-datetimepicker",
-  "version": "0.0.21",
-  "description": "A bootstrap datetime picker component for React.js",
-  "homepage": "http://dev.quri.com/react-bootstrap-datetimepicker/",
+  "name": "react-bootstrap-datetimepicker-unthunk",
+  "version": "0.1.0",
+  "description": "A bootstrap datetime picker component for React.js forked from https://github.com/quri/react-bootstrap-datetimepicker",
+  "homepage": "https://github.com/unthunk/react-bootstrap-datetimepicker",
   "repository": {
     "type": "git",
-    "url": "http://github.com/quri/react-bootstrap-datetimepicker"
+    "url": "https://github.com/unthunk/react-bootstrap-datetimepicker"
   },
   "main": "./lib/DateTimeField.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "datetimepicker",
     "datetime"
   ],
-  "author": "Loïc CHOLLIER <loic@chollier.com>",
+  "author": "Lucas Myers <lucas@unthunk.com>",
   "license": "MIT",
   "peerDependencies": {
     "react": ">=0.12"
