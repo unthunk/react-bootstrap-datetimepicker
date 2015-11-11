@@ -44,6 +44,7 @@ DateTimeField
 | **maxDate** | moment | undefined | The latest date allowed for entry in the calendar view. |
 | **mode** | string | undefined | Allows to selectively display only the time picker ('time') or the date picker ('date') |
 | **icons** | object| {time: 'glyphicon glyphicon-time', date: 'glyphicon glyphicon-calendar', up: 'glyphicon glyphicon-chevron-up', down: 'glyphicon glyphicon-chevron-down', previous: 'glyphicon glyphicon-chevron-left', next: 'glyphicon glyphicon-chevron-right', today: 'glyphicon glyphicon-screenshot', clear: 'glyphicon glyphicon-trash', close: 'glyphicon glyphicon-remove'} | Optionally replace any/all of the icons |
+| **widgetPositioning** | object | {vertical: 'auto', horizontal: 'auto'} | Set position of widget, accepts horizontal: 'auto', 'left', 'right' and vertical: 'auto', 'top', 'bottom' |
 
 Update Warning
 ===============================
