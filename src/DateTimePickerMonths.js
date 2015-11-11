@@ -14,9 +14,9 @@ export default class DateTimePickerMonths extends Component {
   }
 
   renderMonths = () => {
+    let currentLocaleData = moment.localeData(this.props.viewDate.locale());
     var classes, i, month, months, monthsShort;
     month = this.props.selectedDate.month();
-    monthsShort = moment.monthsShort();
     i = 0;
     months = [];
     while (i < 12) {
@@ -24,7 +24,7 @@ export default class DateTimePickerMonths extends Component {
         month: true,
         "active": i === month && this.props.viewDate.year() === this.props.selectedDate.year()
       };
-      months.push(<span key={i} className={classnames(classes)} onClick={this.props.setViewMonth}>{monthsShort[i]}</span>);
+      months.push(<span key={i} className={classnames(classes)} onClick={this.props.setViewMonth}>{currentLocaleData.monthsShort(this.props.viewDate.month(i))}</span>);
       i++;
     }
     return months;
