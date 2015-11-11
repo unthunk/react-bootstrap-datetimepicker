@@ -14,7 +14,8 @@ export default class DateTimePickerDays extends Component {
     setSelectedDate: PropTypes.func.isRequired,
     showMonths: PropTypes.func.isRequired,
     minDate: PropTypes.object,
-    maxDate: PropTypes.object
+    maxDate: PropTypes.object,
+    calendarFormat: PropTypes.string
   }
 
   static defaultProps = {
@@ -69,6 +70,17 @@ export default class DateTimePickerDays extends Component {
     return html;
   }
 
+  renderWeekdays() {
+    let currentLocaleData = moment.localeData(this.props.viewDate.locale());
+    console.log('this.props.viewDate.locale(): '+ this.props.viewDate.locale());
+    let weekdays = [0,1,2,3,4,5,6].map(i =>
+      currentLocaleData.weekdaysMin(this.props.viewDate.weekday(i))
+    );
+    return weekdays.map(weekday => (
+        <th className="dow">{weekday}</th>
+    ));
+  }
+
   render() {
     return (
     <div className="datepicker-days" style={{display: "block"}}>
@@ -79,7 +91,7 @@ export default class DateTimePickerDays extends Component {
                 <DateTimePickerIcons onClick={this.props.subtractMonth} icons={this.props.icons} glyph="previous" />
               </th>
 
-              <th className="picker-switch" data-action="pickerSwitch" colSpan="5" onClick={this.props.showMonths}>{moment.months()[this.props.viewDate.month()]} {this.props.viewDate.year()}</th>
+              <th className="picker-switch" data-action="pickerSwitch" colSpan="5" onClick={this.props.showMonths}>{this.props.viewDate.format(this.props.calendarFormat)}</th>
 
               <th className="next" data-action="next" >
                 <DateTimePickerIcons onClick={this.props.addMonth} icons={this.props.icons} glyph="next" />
@@ -87,19 +99,7 @@ export default class DateTimePickerDays extends Component {
             </tr>
 
             <tr>
-              <th className="dow">Su</th>
-
-              <th className="dow">Mo</th>
-
-              <th className="dow">Tu</th>
-
-              <th className="dow">We</th>
-
-              <th className="dow">Th</th>
-
-              <th className="dow">Fr</th>
-
-              <th className="dow">Sa</th>
+              {this.renderWeekdays()}
             </tr>
           </thead>
 
