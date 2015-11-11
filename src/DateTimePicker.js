@@ -38,7 +38,8 @@ export default class DateTimePicker extends Component {
     widgetStyle: PropTypes.object,
     togglePicker: PropTypes.func,
     setSelectedHour: PropTypes.func,
-    setSelectedMinute: PropTypes.func
+    setSelectedMinute: PropTypes.func,
+    calendarFormat: PropTypes.string
   }
 
   renderDatePicker = () => {
@@ -49,6 +50,7 @@ export default class DateTimePicker extends Component {
               addDecade={this.props.addDecade}
               addMonth={this.props.addMonth}
               addYear={this.props.addYear}
+              calendarFormat={this.props.calendarFormat}
               daysOfWeekDisabled={this.props.daysOfWeekDisabled}
               icons={this.props.icons}
               maxDate={this.props.maxDate}
