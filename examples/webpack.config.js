@@ -8,7 +8,7 @@ module.exports = {
   },
 
   output: {
-    path: __dirname,
+    path: path.join(__dirname, "/dist/"),
     filename: "[name].js",
     chunkFilename: "[id].chunk.js",
     sourceMapFilename: "[name].map",
